@@ -15,7 +15,7 @@ import spotipy.util as util
 import pandas as pd
 
 app = Flask(__name__) 
-app.secret_key = "15s5156a1-354f-2384-g365-2a5248621475"
+app.config['SECRET_KEY'] = os.urandom(64)
 
 client_id = '8dafe80271644fcdaf587c49f2b1069f'
 client_secret = '43a89c7655bd45b7afca764f348efd3e'
@@ -41,7 +41,7 @@ def home():
   if not sp_oauth.validate_token(cache_handler.get_cached_token()):
     auth_url = sp_oauth.get_authorize_url()
     return redirect(auth_url) # login to spotify
-  return redirect(url_for('input_playlist'))
+  return redirect(url_for('get_playlists'))
 
 @app.route('/callback')
 def callback():
@@ -49,7 +49,7 @@ def callback():
   return redirect ( url_for('get_playlists'))
 
 
-#@app.route('/get_playlists')
+@app.route('/get_playlists')
 def get_playlists():
   if not sp_oauth.validate_token(cache_handler.get_cached_token()):
     auth_url = sp_oauth.get_authorize_url()
@@ -63,8 +63,8 @@ def get_playlists():
   #just uris
   playlists_uri = [(pl['external_urls']['spotify']) for pl in playlists['items']]
   #playlists_html = '<br>'.join([f'{name}:{url}' for name, url in playlists_info])
-  return playlists_info
+  return playlists_uri
 
 
 if __name__ =='__main__':
-  app.run(debug=False)
+  app.run(debug=True)

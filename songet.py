@@ -1,6 +1,7 @@
 from flask import Flask, redirect, request, session,  url_for
 import random
 import string
+import time
 import urllib.parse
 import os
 import sys
@@ -51,6 +52,11 @@ if st.session_state.clicked:
   st.write('Button clicked!')
   with open(r"C:\\Users\\amari\Downloads\\Login.py") as file:
     exec(file.read())
+    
+    
+
+    
+  
   #http://127.0.0.1:5000
   
   #st.slider('Select a value')
