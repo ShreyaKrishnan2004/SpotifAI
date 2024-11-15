@@ -15,10 +15,10 @@ import spotipy.util as util
 import pandas as pd
 
 app = Flask(__name__) 
-app.config['SECRET_KEY'] = os.urandom(64)
+app.secret_key = "15s5156a1-354f-2384-g365-2a5248621475"
 
-client_id = '8dafe80271644fcdaf587c49f2b1069f'
-client_secret = '43a89c7655bd45b7afca764f348efd3e'
+client_id = '4a92811c8a5c418fbbe3a7ecd99d1632'
+client_secret = '02573e96f63449feafc886f8f89d4236'
 redirect_uri = 'http://localhost:5000/callback' 
 scope = 'playlist-read-private'
 
@@ -33,7 +33,6 @@ sp_oauth = SpotifyOAuth(
   show_dialog=True
 )
 sp_au = Spotify(auth_manager=sp_oauth)
-
 
 
 @app.route('/')

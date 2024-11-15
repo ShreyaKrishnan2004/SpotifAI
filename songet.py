@@ -1,7 +1,7 @@
 from flask import Flask, redirect, request, session,  url_for
 import random
 import string
-import time
+from pathlib import Path
 import urllib.parse
 import os
 import sys
@@ -22,12 +22,13 @@ import kn as kn
 
 app = Flask(__name__)
 app.secret_key = "15s5156a1-354f-2384-g365-2a5248621475"
-
-CLIENT_ID = "8dafe80271644fcdaf587c49f2b1069f" # Amaris id
-CLIENT_SECRET = "43a89c7655bd45b7afca764f348efd3e" # Amaris Secret
+'''
+CLIENT_ID = "4a92811c8a5c418fbbe3a7ecd99d1632" # Amaris id
+CLIENT_SECRET = "02573e96f63449feafc886f8f89d4236" # Amaris Secret
 REDIRECT_URI = "http://localhost:5000/callback"
 SCOPE = 'user-library-read user-read-email'
 cache_handler = FlaskSessionCacheHandler(session)
+
 
 sp_oauth = SpotifyOAuth(
   client_id = CLIENT_ID,
@@ -37,35 +38,27 @@ sp_oauth = SpotifyOAuth(
   cache_handler=cache_handler,
   show_dialog=True
 )
-sp_au = Spotify(auth_manager=sp_oauth)
+sp_au = Spotify(auth_manager=sp_oauth)'''
 
+# Initialize session state
+if 'button' not in st.session_state:
+    st.session_state.button = False
 
-if 'clicked' not in st.session_state:
-    st.session_state.clicked = False
-
+# Define the click function
 def click_button():
-    st.session_state.clicked = True
+    st.session_state.button = not st.session_state.button
+    # Run Login.py as a subprocess
+    login_script_path = Path(r"C:\\Users\\amari\Downloads\\Login.py")
+    if login_script_path.exists():
+        subprocess.run(["python", str(login_script_path)])
 
+# Streamlit button
 st.button('Spotify Login', on_click=click_button)
 
-if st.session_state.clicked:
-  st.write('Button clicked!')
-  with open(r"C:\\Users\\amari\Downloads\\Login.py") as file:
-    exec(file.read())
-    
-    
-
-    
-  
-  #http://127.0.0.1:5000
-  
-  #st.slider('Select a value')
-
-
-'''my_expander = st.expander()
-#my_expander.write('See Playlists')
-clicked = my_expander.button('See Playlists')'''
-
-
+# Conditional content based on button state
+if st.session_state.button:
+    st.write('Button is on!')
+else:
+    st.write('Button is off!')
   
  
