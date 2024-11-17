@@ -34,6 +34,7 @@ sp_oauth = SpotifyOAuth(
 )
 sp_au = Spotify(auth_manager=sp_oauth)
 
+playlists_uri_arr = []
 
 @app.route('/')
 def home():
@@ -62,8 +63,11 @@ def get_playlists():
   #just uris
   playlists_uri = [(pl['external_urls']['spotify']) for pl in playlists['items']]
   #playlists_html = '<br>'.join([f'{name}:{url}' for name, url in playlists_info])
+  #for uri in playlists_uri:
+  #  playlists_uri_arr.append(uri)
+  
   return playlists_uri
 
 
 if __name__ =='__main__':
-  app.run(debug=True)
+  app.run(debug=False)
